@@ -1,0 +1,77 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Here_Doc_Var_Patch.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: razamora <razamora@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/21 20:51:50 by bmatos-d          #+#    #+#             */
+/*   Updated: 2024/09/05 22:51:04 by razamora         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../MAIN/minishell.h"
+
+static char	*get_var_value(int *iterator, char *input, t_env *environment)
+{
+	char	*var;
+	char	*val;
+	int		count;
+	char	c;
+
+	var = NULL;
+	val = NULL;
+	count = 0;
+	(*iterator)++;
+	c = input[*iterator + count];
+	while (count < 65 && (c == '_' || ft_isalnum(c)))
+	{
+		var = add_character(c, var, 1);
+		c = input[*iterator + ++count];
+	}
+	val = get_val_env(var, environment);
+	if (!val)
+		val = ft_strdup("");
+	free(var);
+	*iterator += count - 1;
+	return (val);
+}
+
+static void	evaluate_var(char *input, char **output, int *quote, t_env *env)
+{
+	int		iter;
+	char	*value;
+
+	iter = 0;
+	while (input[iter])
+	{
+		in_quotes(input[iter], quote);
+		if ((input[iter] == '$' && input[iter + 1] == '?'))
+		{
+			*output = ft_strjoin_mi(*output, get_val_env("?", env), DEL, DEL);
+			iter += 1;
+		}
+		else if ((input[iter] == '$' && *quote != 1 \
+		&& input[iter + 1] != '\0' && (ft_isalnum(input[iter + 1]) \
+		|| input[iter + 1] == 95)))
+		{
+			value = get_var_value(&iter, input, env);
+			*output = ft_strjoin_mi(*output, value, DEL, DEL);
+		}
+		else
+			*output = add_character(input[iter], *output, 1);
+		iter++;
+	}
+}
+
+char	*variable_expansion_hd(char *input, t_env *environment)
+{
+	int		quote;
+	char	*output;
+
+	quote = 0;
+	output = NULL;
+	evaluate_var(input, &output, &quote, environment);
+	free(input);
+	return (output);
+}
