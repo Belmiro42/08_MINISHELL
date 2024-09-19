@@ -6,7 +6,7 @@
 /*   By: razamora <razamora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 21:41:50 by bmatos-d          #+#    #+#             */
-/*   Updated: 2024/09/05 22:51:04 by razamora         ###   ########.fr       */
+/*   Updated: 2024/09/06 21:29:14 by razamora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,12 @@ static size_t	count_tokens(t_token *tokens)
 	return (count);
 }
 
+static void	add_to_args(t_pipe *pipe, size_t *count, t_token **real)
+{
+	pipe->args[(*count)++] = (*real)->token;
+	(*real) = (*real)->next;
+}
+
 static int	convert_to_args(t_pipe *pipe)
 {
 	size_t	count;
@@ -52,10 +58,7 @@ static int	convert_to_args(t_pipe *pipe)
 		while (real)
 		{
 			if (real->token)
-			{
-				pipe->args[count++] = real->token;
-				real = real->next;
-			}
+				add_to_args(pipe, &count, &real);
 		}
 		tokens = tokens->next;
 	}

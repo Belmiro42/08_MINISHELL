@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Builtin_Utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmatos-d <bmatos-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: razamora <razamora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 21:06:16 by bmatos-d          #+#    #+#             */
-/*   Updated: 2024/09/06 00:11:45 by bmatos-d         ###   ########.fr       */
+/*   Updated: 2024/09/08 12:47:39 by razamora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ bool	builtin(char *str)
 	return (false);
 }
 
-	// malloc
 int	exec_builtin(char **args, t_env *env, char **envp, t_set *set)
 {
 	if (envp)

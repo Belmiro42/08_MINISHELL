@@ -6,35 +6,30 @@
 /*   By: razamora <razamora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 05:35:59 by bmatos-d          #+#    #+#             */
-/*   Updated: 2024/09/05 22:51:04 by razamora         ###   ########.fr       */
+/*   Updated: 2024/09/06 23:40:47 by razamora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../MAIN/minishell.h"
 
-// ¡¡TODO: MALLOC
-// ¡¡TODO: PARSE ERROR
-
-// FUNCTION DESCRIPTION: add_to_back
-
-void add_to_back(t_set *current, t_set **head)
+void	add_to_back(t_set *current, t_set **head)
 {
-	t_set *cpy;
+	t_set	*cpy;
 
 	cpy = *head;
 	if (*head == NULL)
 	{
 		*head = current;
-		return;
+		return ;
 	}
 	while (cpy->next)
 		cpy = cpy->next;
 	cpy->next = current;
 }
 
-t_set *make_sets(char **cpy, int *value, int *iterator, char *str)
+t_set	*make_sets(char **cpy, int *value, int *iterator, char *str)
 {
-	t_set *current;
+	t_set	*current;
 
 	if (*iterator < (int)ft_strlen(str))
 		*iterator += 2;
@@ -49,13 +44,13 @@ t_set *make_sets(char **cpy, int *value, int *iterator, char *str)
 	return (current);
 }
 
-t_set *find_sets(char *str)
+t_set	*find_sets(char *str)
 {
-	t_set *ret;
-	int iterator;
-	int value;
-	char *cpy;
-	int inquote;
+	t_set	*ret;
+	int		iterator;
+	int		value;
+	char	*cpy;
+	int		inquote;
 
 	cpy = NULL;
 	value = 0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Multi_Exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmatos-d <bmatos-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: razamora <razamora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 19:50:17 by bmatos-d          #+#    #+#             */
-/*   Updated: 2024/09/09 14:08:43 by bmatos-d         ###   ########.fr       */
+/*   Updated: 2024/09/11 17:36:57 by razamora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,19 @@
 //  ┌───────────────────────────────────────────────────────────────────────┐
 //  │								MULTI EXEC								│
 //  └───────────────────────────────────────────────────────────────────────┘
+
+int	pipe_num(t_pipe *pipe)
+{
+	int	count;
+
+	count = 0;
+	while (pipe)
+	{
+		count++;
+		pipe = pipe->next;
+	}
+	return (count);
+}
 
 static pid_t	first_process(t_pipe *pipe, int *file_pipe, t_env *env)
 {
@@ -66,7 +79,6 @@ static pid_t	middle_processes(t_pipe **curr, int file_pipe[2], t_env *env)
 		if (fd[1] < 0)
 			exit(close_middle_fd(file_pipe, middle_file));
 		close_last_middle_fd(file_pipe, middle_file);
-		bash();
 		execute_command((*curr)->args, env_to_char(env));
 	}
 	(close(file_pipe[0]), close(middle_file[1]));

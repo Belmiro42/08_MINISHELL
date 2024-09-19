@@ -6,17 +6,17 @@
 /*   By: razamora <razamora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:26:47 by bmatos-d          #+#    #+#             */
-/*   Updated: 2024/09/05 22:51:04 by razamora         ###   ########.fr       */
+/*   Updated: 2024/09/14 15:06:53 by razamora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../MAIN/minishell.h"
 
-static void i_o_checker(int *ret, char *str)
+static void	i_o_checker(int *ret, char *str)
 {
-	int quote;
-	int pos;
-	bool i_o_valid;
+	int		quote;
+	int		pos;
+	bool	i_o_valid;
 
 	quote = 0;
 	pos = 0;
@@ -31,7 +31,8 @@ static void i_o_checker(int *ret, char *str)
 				pos++;
 			while (ft_isspace(str[pos]))
 				pos++;
-			if (str[pos] == '|' || str[pos] == '<' || str[pos] == '>' || (str[pos] == '&' && str[pos + 1] == '&') || !str[pos])
+			if (str[pos] == '|' || str[pos] == '<' || str[pos] == '>' \
+			|| (str[pos] == '&' && str[pos + 1] == '&') || !str[pos])
 				return ((void)(*ret = 1));
 		}
 		else
@@ -39,11 +40,11 @@ static void i_o_checker(int *ret, char *str)
 	}
 }
 
-static void pipe_checker(int *ret, char *str)
+static void	pipe_checker(int *ret, char *str)
 {
-	int quote;
-	int pos;
-	bool pipe_valid;
+	int		quote;
+	int		pos;
+	bool	pipe_valid;
 
 	quote = 0;
 	pos = -1;
@@ -51,11 +52,10 @@ static void pipe_checker(int *ret, char *str)
 	while (str[++pos])
 	{
 		in_quotes(str[pos], &quote);
-		if (!(!quote && (str[pos] == '|' || (str[pos] == '&' && str[pos + 1] == '&'))) && (quote || !ft_isspace(str[pos])))
+		if (!(!quote && (str[pos] == '|' || (str[pos] == '&' && \
+		str[pos + 1] == '&'))) && (quote || !ft_isspace(str[pos])))
 			pipe_valid = 1;
-		else if (ft_isspace(str[pos]))
-			;
-		else
+		else if (!ft_isspace(str[pos]))
 		{
 			if (str[pos] && str[pos] == str[pos + 1])
 				pos++;
@@ -67,9 +67,9 @@ static void pipe_checker(int *ret, char *str)
 	return ((void)(*ret = !pipe_valid));
 }
 
-static void quote_checker(int *ret, char *str)
+static void	quote_checker(int *ret, char *str)
 {
-	int quote;
+	int	quote;
 
 	quote = 0;
 	while (*str)
@@ -78,10 +78,27 @@ static void quote_checker(int *ret, char *str)
 		*ret = 1;
 }
 
-int parse_error(char *str, t_env *environment)
+static void	dbl_pipe(int *ret, char *str)
 {
-	int ret;
-	char *new_val;
+	int	quote;
+	int	pos;
+
+	quote = 0;
+	pos = -1;
+	while (str[++pos])
+	{
+		in_quotes(str[pos], &quote);
+		if (!quote && str[pos] == '|' && str[pos + 1] == '|')
+		{
+			return ((void)(*ret = 1));
+		}
+	}
+}
+
+int	parse_error(char *str, t_env *environment)
+{
+	int		ret;
+	char	*new_val;
 
 	ret = 0;
 	quote_checker(&ret, str);
@@ -89,6 +106,8 @@ int parse_error(char *str, t_env *environment)
 		pipe_checker(&ret, str);
 	if (!ret)
 		i_o_checker(&ret, str);
+	if (!ret)
+		dbl_pipe(&ret, str);
 	if (ret == 1)
 	{
 		ft_putstr_fd("Minishekk: parse error\n", 2);

@@ -6,7 +6,7 @@
 /*   By: razamora <razamora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:37:00 by razamora          #+#    #+#             */
-/*   Updated: 2024/09/05 22:51:04 by razamora         ###   ########.fr       */
+/*   Updated: 2024/09/11 17:36:43 by razamora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	close_last_middle_fd(int *file_pipe, int *middle_file)
 	close(file_pipe[0]);
 	close(middle_file[1]);
 	close(middle_file[0]);
+	bash();
 }
 
 int	close_middle_fd(int *file_pipe, int *middle_file)
@@ -39,16 +40,16 @@ void	msm_heredoc(char *limiter, int line)
 	msg2 = " delimited by end-of-file (wanted `";
 	new = ft_strjoin_mi(msg, ft_itoa(line), KEEP, DEL);
 	if (!new)
-		ft_putendl_fd("malloc failed", 1);
+		ft_putendl_fd("malloc failed", 2);
 	new = ft_strjoin_mi(new, msg2, DEL, KEEP);
 	if (!new)
-		ft_putendl_fd("malloc failed", 1);
+		ft_putendl_fd("malloc failed", 2);
 	new = ft_strjoin_mi(new, limiter, DEL, KEEP);
 	if (!new)
-		ft_putendl_fd("malloc failed", 1);
+		ft_putendl_fd("malloc failed", 2);
 	new = ft_strjoin_mi(new, "')", DEL, KEEP);
 	if (!new)
-		ft_putendl_fd("malloc failed", 1);
+		ft_putendl_fd("malloc failed", 2);
 	ft_putendl_fd(new, 2);
 	free(new);
 }

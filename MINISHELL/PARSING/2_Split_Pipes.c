@@ -6,7 +6,7 @@
 /*   By: razamora <razamora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 05:26:28 by bmatos-d          #+#    #+#             */
-/*   Updated: 2024/09/05 22:51:04 by razamora         ###   ########.fr       */
+/*   Updated: 2024/09/06 20:19:25 by razamora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,24 @@
 
 // ¡¡TODO: PARSE ERROR
 
-void pipe_to_back(t_pipe *current, t_pipe **head)
+void	pipe_to_back(t_pipe *current, t_pipe **head)
 {
-	t_pipe *cpy;
+	t_pipe	*cpy;
 
 	cpy = *head;
 	if (*head == NULL)
 	{
 		*head = current;
-		return;
+		return ;
 	}
 	while (cpy->next)
 		cpy = cpy->next;
 	cpy->next = current;
 }
 
-t_pipe *make_pipes(char **cpy, int *iterator)
+t_pipe	*make_pipes(char **cpy, int *iterator)
 {
-	t_pipe *current;
+	t_pipe	*current;
 
 	*iterator += 1;
 	current = new_pipe();
@@ -40,13 +40,13 @@ t_pipe *make_pipes(char **cpy, int *iterator)
 	return (current);
 }
 
-void find_pipes(t_set *set)
+void	find_pipes(t_set *set)
 {
-	t_pipe *ret;
-	int iterator;
-	int inquote;
-	char *cpy;
-	char *str;
+	t_pipe	*ret;
+	int		iterator;
+	int		inquote;
+	char	*cpy;
+	char	*str;
 
 	cpy = NULL;
 	inquote = 0;

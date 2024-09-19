@@ -6,7 +6,7 @@
 /*   By: bmatos-d <bmatos-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 19:52:41 by bmatos-d          #+#    #+#             */
-/*   Updated: 2024/09/09 14:02:59 by bmatos-d         ###   ########.fr       */
+/*   Updated: 2024/09/11 13:59:26 by bmatos-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ int static	internal_process(t_set *set, t_env *env)
 		fd[1] = handle_outfile(set->pipe->out);
 		if (fd[1] < 0)
 			exit(1);
-		printf("HELLO");
 		bash();
 		if (set->pipe->args[0])
 			execute_command(set->pipe->args, env_to_char(env));

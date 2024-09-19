@@ -6,7 +6,7 @@
 /*   By: razamora <razamora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 23:33:25 by bmatos-d          #+#    #+#             */
-/*   Updated: 2024/09/05 22:51:04 by razamora         ###   ########.fr       */
+/*   Updated: 2024/09/06 21:10:38 by razamora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,10 @@ static int	real_token(char **token, t_token *tk)
 	return (0);
 }
 
-static int	split_by_real_space(t_token *tk)
+static int	split_tokens(t_token *tk, char **token, t_token *to_be_split)
 {
-	char	*token;
 	char	*curr_str;
-	t_token	*to_be_split;
 
-	to_be_split = tk->quoted_expanded;
-	token = ft_strdup("");
-	if (!token)
-		return (1);
 	while (to_be_split)
 	{
 		curr_str = to_be_split->token;
@@ -52,12 +46,12 @@ static int	split_by_real_space(t_token *tk)
 		{
 			if (*curr_str == ' ' && to_be_split->inquote == 0)
 			{
-				if (real_token(&token, tk))
+				if (real_token(token, tk))
 					return (1);
 			}
 			else
 			{
-				token = add_character(*curr_str, token, DEL);
+				*token = add_character(*curr_str, *token, DEL);
 				if (!token)
 					return (1);
 			}
@@ -65,8 +59,22 @@ static int	split_by_real_space(t_token *tk)
 		}
 		to_be_split = to_be_split->next;
 	}
-	if (real_token(&token, tk))
+	if (real_token(token, tk))
 		return (1);
+	return (0);
+}
+
+static int	split_by_real_space(t_token *tk)
+{
+	char	*token;
+	t_token	*to_be_split;
+
+	to_be_split = tk->quoted_expanded;
+	token = ft_strdup("");
+	if (!token)
+		return (1);
+	if (split_tokens(tk, &token, to_be_split))
+		return (free (token), 1);
 	free(token);
 	return (0);
 }

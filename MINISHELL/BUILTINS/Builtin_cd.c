@@ -6,7 +6,7 @@
 /*   By: razamora <razamora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:05:16 by bmatos-d          #+#    #+#             */
-/*   Updated: 2024/09/05 22:51:04 by razamora         ###   ########.fr       */
+/*   Updated: 2024/09/07 14:32:31 by razamora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,24 @@ static int	no_args(t_env *environment)
 	return (free(home_path), EXIT_FAILURE);
 }
 
+static void	checkdir(void)
+{
+	char	*pwd;
+
+	pwd = NULL;
+	pwd = getcwd(pwd, 0);
+	if (pwd == NULL)
+	{
+		chdir("/");
+		pwd = NULL;
+		pwd = getcwd(pwd, 0);
+	}
+	free(pwd);
+}
+
 int	cd_builtin(char **args, t_env *environment)
 {
+	checkdir();
 	if (ft_arrlen(args) > 2)
 	{
 		ft_putstr_fd("Minishekk: cd: too many arguments\n", 2);

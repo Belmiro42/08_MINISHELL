@@ -6,7 +6,7 @@
 /*   By: razamora <razamora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:02:21 by bmatos-d          #+#    #+#             */
-/*   Updated: 2024/09/05 22:51:04 by razamora         ###   ########.fr       */
+/*   Updated: 2024/09/07 14:46:09 by razamora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	env_builtin(char **args, t_env *environment)
 	cpy = environment;
 	if (ft_arrlen(args) > 2)
 	{
-		ft_putstr_fd("Minishekk: env: too many arguments", 2);
+		ft_putstr_fd("Minishekk: env: too many arguments\n", 2);
 		return (EXIT_FAILURE);
 	}
 	environment = environment->next;

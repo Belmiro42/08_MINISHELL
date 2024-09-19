@@ -6,7 +6,7 @@
 /*   By: razamora <razamora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 07:18:50 by razamora          #+#    #+#             */
-/*   Updated: 2024/09/05 22:54:44 by razamora         ###   ########.fr       */
+/*   Updated: 2024/09/07 21:18:55 by razamora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,18 @@ char	*ft_get_path(char **full_cmd, char **envp)
 	return (NULL);
 }
 
+int static	is_builtin(char **s_cmd, char **ev)
+{
+	t_env	*create;
+	int		code;
+
+	create = create_env_variables(ev, 0, NULL);
+	code = exec_builtin(s_cmd, create, ev, NULL);
+	free_env(create);
+	ft_freedbl(s_cmd);
+	return (code);
+}
+
 void	execute_command(char **s_cmd, char **ev)
 {
 	char	*path;
@@ -48,7 +60,7 @@ void	execute_command(char **s_cmd, char **ev)
 	if (s_cmd == NULL || s_cmd[0] == NULL)
 		exit(1);
 	if (builtin(s_cmd[0]))
-		exit(exec_builtin(s_cmd, create_env_variables(ev, 0, NULL), ev, NULL));
+		exit(is_builtin(s_cmd, ev));
 	if (access(s_cmd[0], F_OK | X_OK) == 0 && s_cmd[0][0] == '/')
 	{
 		if (execve(s_cmd[0], s_cmd, ev) == -1)

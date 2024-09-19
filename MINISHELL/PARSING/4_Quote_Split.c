@@ -6,7 +6,7 @@
 /*   By: razamora <razamora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 13:56:55 by bmatos-d          #+#    #+#             */
-/*   Updated: 2024/09/05 22:51:04 by razamora         ###   ########.fr       */
+/*   Updated: 2024/09/06 20:58:59 by razamora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,12 @@ static int	add_node(t_token *token, char **output, int quote)
 	return (0);
 }
 
-static int	sep_by_qt(t_token *token, char *input)
+static int	sep_by_qt(t_token *token, char *input, int quote, int change)
 {
 	char	*output;
-	int		change;
-	int		quote;
 	int		tmp_quote;
 
-	output = malloc(sizeof(char) * 1);
-	output[0] = '\0';
-	quote = 0;
-	change = 0;
+	output = ft_calloc(1, sizeof(char));
 	while (*(++input))
 	{
 		tmp_quote = quote;
@@ -69,16 +64,22 @@ static int	sep_by_qt(t_token *token, char *input)
 	free(output);
 	return (0);
 }
+
 static void	quote_split_var_expansion_out(t_pipe *pipe, t_env *env)
 {
 	t_output	*all_outputs;
 	t_token		*iter_qe;
+	int			change;
+	int			quote;
 
+	quote = 0;
+	change = 0;
 	all_outputs = pipe->out;
 	while (all_outputs)
 	{
 		if (all_outputs->token->token)
-			sep_by_qt(all_outputs->token, all_outputs->token->token - 1);
+			sep_by_qt(all_outputs->token, all_outputs->token->token - 1,
+				quote, change);
 		iter_qe = all_outputs->token->quoted_expanded;
 		while (iter_qe)
 		{
@@ -94,12 +95,17 @@ static void	quote_split_var_expansion_in(t_pipe *pipe, t_env *env)
 {
 	t_input	*all_inputs;
 	t_token	*iter_qe;
+	int		change;
+	int		quote;
 
+	quote = 0;
+	change = 0;
 	all_inputs = pipe->in;
 	while (all_inputs)
 	{
 		if (all_inputs->token->token)
-			sep_by_qt(all_inputs->token, all_inputs->token->token - 1);
+			sep_by_qt(all_inputs->token, all_inputs->token->token - 1,
+				quote, change);
 		iter_qe = all_inputs->token->quoted_expanded;
 		while (iter_qe)
 		{
@@ -116,13 +122,17 @@ int	quote_split_var_expansion(t_pipe *pipe, t_env *env)
 {
 	t_token	*iter;
 	t_token	*iter_qe;
+	int		change;
+	int		quote;
 
+	quote = 0;
+	change = 0;
 	iter = pipe->token;
 	while (iter)
 	{
 		if (iter->token)
 		{
-			sep_by_qt(iter, iter->token - 1);
+			sep_by_qt(iter, iter->token - 1, quote, change);
 		}
 		iter_qe = iter->quoted_expanded;
 		while (iter_qe)

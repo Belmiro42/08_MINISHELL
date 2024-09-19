@@ -6,7 +6,7 @@
 /*   By: razamora <razamora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 09:31:56 by bmatos-d          #+#    #+#             */
-/*   Updated: 2024/09/05 22:51:04 by razamora         ###   ########.fr       */
+/*   Updated: 2024/09/08 13:15:08 by razamora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,14 +82,14 @@ void	free_parser_struct(t_set *set)
 		while (pipe)
 		{
 			tmp = pipe;
-			free_input(pipe);
-			free_output(pipe);
-			free_token(pipe->token);
+			pipe = ((t_pipe *)tmp)->next;
+			free_input(((t_pipe *)tmp));
+			free_output(((t_pipe *)tmp));
+			free_token(((t_pipe *)tmp)->token);
 			free(((t_pipe *)tmp)->args);
 			if ((((t_pipe *)tmp)->raw_text))
 				free((((t_pipe *)tmp)->raw_text));
-			free(tmp);
-			pipe = pipe->next;
+			free(((t_pipe *)tmp));
 		}
 		tmp = set;
 		set = set->next;

@@ -6,7 +6,7 @@
 /*   By: razamora <razamora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 01:47:47 by bmatos-d          #+#    #+#             */
-/*   Updated: 2024/09/05 22:51:04 by razamora         ###   ########.fr       */
+/*   Updated: 2024/09/06 21:21:07 by razamora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,30 +46,28 @@ static int	find_empty_tokens(t_token *node)
 
 int	fix_empty(t_pipe *pipe)
 {
-	t_token		*args;
-	t_input		*inputs;
-	t_output	*output;
+	void		*tmp;
 
-	inputs = pipe->in;
-	while (inputs)
+	tmp = (void *)pipe->in;
+	while (tmp)
 	{
-		if (find_empty_tokens(inputs->token))
+		if (find_empty_tokens(((t_input *)tmp)->token))
 			return (1);
-		inputs = inputs->next;
+		tmp = (void *)((t_input *)tmp)->next;
 	}
-	output = pipe->out;
-	while (output)
+	tmp = (void *)pipe->out;
+	while (tmp)
 	{
-		if (find_empty_tokens(output->token))
+		if (find_empty_tokens(((t_output *)tmp)->token))
 			return (1);
-		output = output->next;
+		tmp = (void *)((t_output *)tmp)->next;
 	}
-	args = pipe->token;
-	while (args)
+	tmp = (void *)pipe->token;
+	while (tmp)
 	{
-		if (find_empty_tokens(args))
+		if (find_empty_tokens((t_token *)tmp))
 			return (1);
-		args = args->next;
+		tmp = (void *)((t_token *)tmp)->next;
 	}
 	return (0);
 }

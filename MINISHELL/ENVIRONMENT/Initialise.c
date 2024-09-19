@@ -6,7 +6,7 @@
 /*   By: razamora <razamora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 13:14:29 by bmatos-d          #+#    #+#             */
-/*   Updated: 2024/09/05 22:51:04 by razamora         ###   ########.fr       */
+/*   Updated: 2024/09/08 12:53:15 by razamora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ t_env	*create_env_variables(char **ex_variables, int argc, char **argv)
 
 	(void)(argc + (int)((unsigned long)(argv)));
 	environment_variables = malloc(sizeof(t_env));
+	if (!environment_variables)
+		return (NULL);
 	environment_variables->key = ft_strdup("?");
 	environment_variables->value = ft_strdup("0");
 	environment_variables->next = NULL;

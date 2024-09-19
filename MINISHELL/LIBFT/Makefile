@@ -3,18 +3,18 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bmatos-d <bmatos-d@student.42.fr>          +#+  +:+       +#+         #
+#    By: razamora <razamora@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/16 20:02:51 by razamora          #+#    #+#              #
-#    Updated: 2024/08/21 19:43:57 by bmatos-d         ###   ########.fr        #
+#    Updated: 2024/09/08 14:36:57 by razamora         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
-CC = gcc
+CC = gcc 
 AR = ar -rcs
 FRM = rm -rf
-CFLAGS = -Wall -Wextra -Werror -g3
+CFLAGS = -Wall -Wextra -Werror -g3 
 
 SRCS = ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c ft_toupper.c ft_tolower.c \
 ft_memchr.c ft_memcmp.c ft_memmove.c ft_memset.c ft_memcpy.c ft_calloc.c ft_strdup.c ft_bzero.c \

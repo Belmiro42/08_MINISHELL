@@ -6,19 +6,19 @@
 #    By: razamora <razamora@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/13 15:53:30 by bmatos-d          #+#    #+#              #
-#    Updated: 2024/09/04 22:04:40 by razamora         ###   ########.fr        #
+#    Updated: 2024/09/11 18:14:12 by razamora         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 REMOVE	  = rm -rf
 CC	  	  = cc
 CFLAGS	  =-Wall -Werror -Wextra -g3
-EXTRAFLAG = -lreadline  -fsanitize=leak
+EXTRAFLAG = -lreadline -fsanitize=leak -fsanitize=address
 NAME	  = minishell
 MAKEFLAGS = --no-print-directory
 
-LIBFT		= _______________LIBFT/libft.a
-LIBFT_PATH  = _______________LIBFT
+LIBFT		= LIBFT/libft.a
+LIBFT_PATH  = LIBFT
 
 BLTN_PATH = ./BUILTINS
 BLTN_SRCS = Builtin_cd.c							\
@@ -34,7 +34,6 @@ ENVR_SRCS = Initialise.c
 
 LIBR_PATH = ./LIBERATION
 LIBR_SRCS = Liberation.c							\
-			Liberation_utils.c
 
 PARS_PATH = ./PARSING
 PARS_SRCS = 0_Parse_Error.c							\
@@ -48,7 +47,8 @@ PARS_SRCS = 0_Parse_Error.c							\
 			8_Heredoc_Expand.c
 
 SIGN_PATH = ./SIGNALS
-SIGN_SRCS = Signal_Handling.c
+SIGN_SRCS = Signal_Handling.c 						\
+			Signal_Bash.c
 
 UTIL_PATH = ./UTILS
 UTIL_SRCS = Builtin_Utils.c							\
@@ -62,7 +62,8 @@ UTIL_SRCS = Builtin_Utils.c							\
 			Ambiguous_Redirect.c					\
 			Execution_Utils_1.c 					\
 			Execution_Utils_2.c 					\
-			Execution_Utils_3.c
+			Execution_Utils_3.c						\
+			Liberation_Utils.c
 			
 EXEC_PATH = ./EXECUTION
 EXEC_SRCS =  Multi_Exec.c							\
@@ -71,7 +72,8 @@ EXEC_SRCS =  Multi_Exec.c							\
 			Single_Exec.c
 					
 MAIN_PATH = ./MAIN
-MAIN_SRCS = MAIN.c
+MAIN_SRCS = Main.c \
+			Shekk.c
 
 SOURCES  := $(addprefix $(BLTN_PATH)/,$(BLTN_SRCS)) \
 			$(addprefix $(ENVR_PATH)/,$(ENVR_SRCS)) \

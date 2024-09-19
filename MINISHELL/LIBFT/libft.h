@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: razamora <razamora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bmatos-d <bmatos-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 14:09:19 by razamora          #+#    #+#             */
-/*   Updated: 2024/07/26 17:29:57 by razamora         ###   ########.fr       */
+/*   Updated: 2024/09/11 15:11:52 by bmatos-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <stddef.h>
 # include <unistd.h>
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 500
+#  define BUFFER_SIZE 1000
 # endif
 # ifndef FD_MAX
 #  define FD_MAX 1024

@@ -18,7 +18,7 @@
 //  │									INCLUDES							│
 //  └───────────────────────────────────────────────────────────────────────┘
 
-# include "../_______________LIBFT/libft.h"
+# include "../LIBFT/libft.h"
 # include <dirent.h>
 # include <errno.h>
 # include <limits.h>
@@ -37,7 +37,7 @@
 //  │									MACROS								│
 //  └───────────────────────────────────────────────────────────────────────┘
 
-# define DEL  1
+# define DEL 1
 # define KEEP 0
 # define GREEN "\001\x1B[32m\002"
 # define WHITE "\001\x1B[37m\002"
@@ -141,23 +141,17 @@ int						word_splitting(t_pipe *pipe);
 int						fix_empty(t_pipe *pipe);
 void					heredoc_expander(t_pipe *pipe);
 char					*variable_expansion(char *input, t_env *env);
-//void	expand_wildcards_1(t_pipe *pipe);
-char					*expand_wildcards_2(char *input);
-char					**wildcard_split(char const *s, char c);
 t_set					*construct_parser_struct(char *input, t_env *env);
-void					revise_heredocs(char *original, t_pipe *pipe);
 
 //  ────────────────────────────────UTILS──────────────────────────────────
 
 int						parse_error(char *str, t_env *env);
-bool					ft_spsp(char *str, int iterator, int dir);
-bool					hidden_check(char *pattern, char *file);
-bool					match(char *pattern, char *file, int quote);
 bool					is_valid_arg(char *token, char *str, int iterator);
 void					make_input_node(t_pipe *cur, bool param, char **fname);
 void					make_output_node(t_pipe *cur, bool param, char **fname);
 int						in_quotes(char c, int *quote);
 void					ambiguous_redirect(t_input *file, t_output *output);
+bool					no_errors(t_set *set);
 
 //  ┌───────────────────────────────────────────────────────────────────────┐
 //  ├───────────────────────ENVIRONMENT FUNCTIONS───────────────────────────┤
@@ -168,7 +162,6 @@ t_env					*create_env_variables(char **envp, int argc,
 
 //  ────────────────────────────────UTILS──────────────────────────────────
 
-bool					key_exists_env(char *key, t_env *environment);
 void					new_val_env(char *key, char *new_val,
 							t_env **environment);
 char					*get_val_env(char *key, t_env *environment);
@@ -199,16 +192,8 @@ bool					builtin(char *str);
 
 void					default_signals(void);
 void					infunc_signals(void);
-void					shellception(void);
 void					bash(void);
-
-
-//  ┌───────────────────────────────────────────────────────────────────────┐
-//  ├──────────────────────────────ERRORS───────────────────────────────────┤
-//  └───────────────────────────────────────────────────────────────────────┘
-
-void					print_error(char *perror, char *errno);
-bool					no_errors(t_set *set);
+void					shellception(void);
 
 //  ┌───────────────────────────────────────────────────────────────────────┐
 //  ├────────────────────────────LIBERATION─────────────────────────────────┤
@@ -239,15 +224,10 @@ int						catch_exit_code(int argc, pid_t *pids);
 int						handle_infile(t_input *file);
 int						handle_outfile(t_output *file);
 void					handle_heredoc(t_pipe *pipe, t_env *env, t_set *set);
-void					close_last_middle_fd(int *file_pipe, int *middle_file);
-int						close_middle_fd(int *file_pipe, int *middle_file);
 
 //  ────────────────────────────────UTILS──────────────────────────────────
 
-int						o_num(t_output *output);
 void					msm_heredoc(char *limiter, int line);
-int						i_num(t_input *input);
-void					ft_test(char *input);
 char					*ft_find_path(char **envp);
 int						open_file(char *file, int type);
 int						ft_command_error(char *cmd, char **envp);
@@ -256,10 +236,13 @@ char					*ft_get_path(char **full_cmd, char **envp);
 int						ft_strcmp(char *s1, char *s2);
 int						finaly_openfile(char **av, int argc);
 void					ft_close_fd_final(int fd, int *file_pipe);
-void					ft_is_empty(char *cmd);
-void					ft_exit_heredoc(char *line, char *tmp, int *file_pipe);
 char					*variable_expansion_hd(char *input, t_env *environment);
 int						pipe_num(t_pipe *pipe);
 void					is_shellception(char **args);
+void					close_last_middle_fd(int *file_pipe, int *middle_file);
+int						close_middle_fd(int *file_pipe, int *middle_file);
+void					print_shekk(void);
+void					set_exit_val(int exit_val, t_env *environment);
+void					signals_exit_codes(t_env *environment);
 
 #endif
